@@ -1,11 +1,10 @@
 import argparse
 import os
 
-def get_already_downloaded_books(directory):
-    filelist_path = os.path.join(directory, 'filelist.txt')
-    if not os.path.exists(filelist_path):
-        print(f"File {filelist_path} does not exist. Creating a new one.")
-        open(filelist_path, 'w').close()
+def get_already_downloaded_books(directory, output_file):
+    if not os.path.exists(output_file):
+        print(f"File {output_file} does not exist. Creating a new one.")
+        open(output_file, 'w').close()
 
     books = []
     for root, _, files in os.walk(directory):
@@ -13,7 +12,7 @@ def get_already_downloaded_books(directory):
             if file.endswith('.epub') or file.endswith('.pdf'):
                 books.append(file)
 
-    with open(filelist_path, 'w') as file:
+    with open(output_file, 'w') as file:
         for book in books:
             file.write(f"{book}\n")
 
@@ -21,16 +20,17 @@ def get_already_downloaded_books(directory):
 
 def main():
     parser = argparse.ArgumentParser(description='Get already downloaded book list.')
-    parser.add_argument('-d', '--directory', required=True, help='Directory containing filelist.txt')
+    parser.add_argument('-d', '--directory', required=True, help='Directory to search for books')
+    parser.add_argument('-o', '--output', required=True, help='Output file path')
     args = parser.parse_args()
 
-    books = get_already_downloaded_books(args.directory)
+    books = get_already_downloaded_books(args.directory, args.output)
     if books:
         print("Already downloaded books:")
         for book in books:
             print(book)
     else:
-        print("No books found or filelist.txt is empty.")
+        print("No books found or output file is empty.")
 
 if __name__ == '__main__':
     main()
