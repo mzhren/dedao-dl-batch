@@ -20,11 +20,13 @@
 该脚本递归遍历指定目录下的所有目录和文件，把 `.epub` 和 `.pdf` 文件名称列举到 `filelist.txt` 中。如果 `filelist.txt` 文件不存在，则创建它。
 
 ```sh
-python get_downloaded_filelist.py -d /path/to/your/directory
+python get_downloaded_filelist.py -d /path/to/your/directory -o filelist.txt -a
 ```
 
 参数说明：
 - `-d` 或 `--directory`: 指定包含 `filelist.txt` 的目录。
+- `-o` 或 `--output`: （可选）输出文件路径。默认为 `filelist.txt`。
+- `-a` 或 `--append`: （可选）追加模式。如果提供此参数，则追加到 `filelist.txt` 文件中。
 
 ### main.py
 
